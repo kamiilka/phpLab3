@@ -45,3 +45,10 @@ Route::prefix('qb')->group(function () {
     Route::get('/stats', [QueryBuilderController::class, 'aggregates']);
     Route::get('/join', [QueryBuilderController::class, 'joinInner']);
 });
+use App\Http\Controllers\EloquentController;
+
+Route::prefix('eq')->group(function () {
+    Route::get('/students', [EloquentController::class, 'index']);
+    Route::get('/create', [EloquentController::class, 'store']);
+    Route::get('/relations', [EloquentController::class, 'showWithRelation']);
+});
