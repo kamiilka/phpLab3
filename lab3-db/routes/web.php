@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\QueryBuilderController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,4 +34,14 @@ Route::get('/raw-demo', function () {
         'data' => $faculties,
         'logs' => DB::select('select * from log_entries')
     ]);
+});
+
+
+Route::prefix('qb')->group(function () {
+    Route::get('/all', [QueryBuilderController::class, 'all']);
+    Route::get('/filter', [QueryBuilderController::class, 'filter']);
+    Route::get('/columns', [QueryBuilderController::class, 'selectedColumns']);
+    Route::get('/paginated', [QueryBuilderController::class, 'paginated']);
+    Route::get('/stats', [QueryBuilderController::class, 'aggregates']);
+    Route::get('/join', [QueryBuilderController::class, 'joinInner']);
 });
