@@ -60,4 +60,38 @@ class QueryBuilderController extends Controller
             ->get();
         return response()->json($data);
     }
+    // 7. joinLeft
+public function joinLeft()
+{
+    $data = DB::table('faculties')
+        ->leftJoin('departments', 'faculties.id', '=', 'departments.faculty_id')
+        ->select('faculties.name', 'departments.name as dept_name')
+        ->get();
+    return response()->json($data);
+}
+
+// 8. joinRight (в SQLite робимо через leftJoin, міняючи таблиці)
+public function joinRight()
+{
+    $data = DB::table('departments')
+        ->leftJoin('faculties', 'faculties.id', '=', 'departments.faculty_id')
+        ->select('departments.name', 'faculties.name as faculty_name')
+        ->get();
+    return response()->json($data);
+}
+
+// 9. insertUpdateDelete
+public function insertUpdateDelete()
+{
+    // Вставка
+    DB::table('courses')->insert(['title' => 'Новий курс', 'credits' => 2]);
+    
+    // Оновлення
+    DB::table('courses')->where('title', 'Новий курс')->update(['credits' => 3]);
+    
+    // Видалення
+    DB::table('courses')->where('credits', '<', 2)->delete();
+
+    return response()->json(['status' => 'Операції виконано']);
+}
 }

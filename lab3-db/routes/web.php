@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueryBuilderController;
+use App\Http\Controllers\RelationshipController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -52,3 +54,10 @@ Route::prefix('eq')->group(function () {
     Route::get('/create', [EloquentController::class, 'store']);
     Route::get('/relations', [EloquentController::class, 'showWithRelation']);
 });
+Route::get('/qb/join-left', [QueryBuilderController::class, 'joinLeft']);
+Route::get('/qb/join-right', [QueryBuilderController::class, 'joinRight']);
+Route::get('/qb/action', [QueryBuilderController::class, 'insertUpdateDelete']);
+
+
+Route::get('/relations', [RelationshipController::class, 'index']);
+Route::get('/relations/filter', [RelationshipController::class, 'filterByRelation']);
